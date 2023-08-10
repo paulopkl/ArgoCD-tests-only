@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-default
+  namespace: default
+  # namespace: ingress-nginx
+  annotations:
+  #   alb.ingress.kubernetes.io/ssl-passthrough: "true"
+  #   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+  #   nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    # nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/service-upstream: "true"
+  # labels:
+  #   name: ingress-for-argocd
+spec:
+  ingressClassName: nginx
+  rules:
+  # - host: <Host>
+    # http:
+  - http:
+      paths:
+        - pathType: Prefix
+          path: "/webcolor"
+          backend:
+            service:
+              name: webcolor-service
+              # namespace: argocd
+              port: 
+                number: 80
